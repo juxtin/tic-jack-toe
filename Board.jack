@@ -1,0 +1,63 @@
+class Board {
+  field Array squares;
+  static Array locationsx;
+  static Array locationsy;
+
+  
+  constructor Board new(){
+    let locationsx = Array.new(9);
+    let locationsy = Array.new(9);
+
+    let locationsx[0] = 192;
+    let locationsx[1] = 256;
+    let locationsx[2] = 320;
+    let locationsx[3] = 192;
+    let locationsx[4] = 256;
+    let locationsx[5] = 320;
+    let locationsx[6] = 192;
+    let locationsx[7] = 256;
+    let locationsx[8] = 320;
+
+    let locationsy[0] = 64;
+    let locationsy[1] = 64;
+    let locationsy[2] = 64;
+    let locationsy[3] = 128;
+    let locationsy[4] = 128;
+    let locationsy[5] = 128;
+    let locationsy[6] = 192;
+    let locationsy[7] = 192;
+    let locationsy[8] = 192;
+
+    let squares = Array.new(9);
+
+    do drawGrid();
+    return this;
+  }
+
+  method void drawGrid(){
+    // left vertical
+    do Screen.drawLine(224, 32, 224, 224);
+    // right vertical
+    do Screen.drawLine(288, 32, 288, 224);
+    // top horizontal
+    do Screen.drawLine(160, 96, 352, 96);
+    // bottom horizontal
+    do Screen.drawLine(160, 160, 352, 160);
+    return;
+  }
+
+  method void drawO(int x, int y){
+    do Screen.drawCircle(x, y, 26);
+    return;
+  }
+
+  method void drawMove(int location, bool x){
+    var int xcenter;
+    var int ycenter;
+    let xcenter = locationsx[location];
+    let ycenter = locationsy[location];
+    
+    do drawO(xcenter, ycenter);
+    return;
+  }
+}

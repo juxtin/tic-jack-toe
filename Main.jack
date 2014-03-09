@@ -1,0 +1,18 @@
+class Main {
+  function void main(){
+    var Board board;
+    var int i;
+    
+    let board = Board.new();
+
+    let i = 0;
+    while(i < 10){
+      do board.drawMove(i, true);
+      let i = i + 1;
+      do Sys.wait(2000);
+    }
+
+    return;
+  }
+
+}
