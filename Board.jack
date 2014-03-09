@@ -48,6 +48,9 @@ class Board {
 
   method void drawO(int x, int y){
     do Screen.drawCircle(x, y, 26);
+    do Screen.setColor(false);
+    do Screen.drawCircle(x, y, 22);
+    do Screen.setColor(true);
     return;
   }
 
