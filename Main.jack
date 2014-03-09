@@ -2,13 +2,17 @@ class Main {
   function void main(){
     var Board board;
     var int i;
+    var boolean x;
     
     let board = Board.new();
 
     let i = 0;
+    
+    let x = false;
     while(i < 10){
-      do board.drawMove(i, true);
+      do board.drawMove(i, x);
       let i = i + 1;
+      let x = ~x;
       do Sys.wait(2000);
     }
 

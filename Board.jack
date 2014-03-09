@@ -47,20 +47,38 @@ class Board {
   }
 
   method void drawO(int x, int y){
-    do Screen.drawCircle(x, y, 26);
+    do Screen.drawCircle(x, y, 20);
     do Screen.setColor(false);
-    do Screen.drawCircle(x, y, 22);
+    do Screen.drawCircle(x, y, 19);
     do Screen.setColor(true);
     return;
   }
 
-  method void drawMove(int location, bool x){
+  method void drawX(int x, int y){
+    var int left, right, top, bottom;
+
+    let left = x - 15;
+    let right = x + 15;
+    let top = y + 15;
+    let bottom = y - 15;
+
+    do Screen.drawLine(left, top, right, bottom);
+    do Screen.drawLine(right, top, left, bottom);
+
+    return;
+  }
+
+  method void drawMove(int location, boolean x){
     var int xcenter;
     var int ycenter;
     let xcenter = locationsx[location];
     let ycenter = locationsy[location];
     
-    do drawO(xcenter, ycenter);
+    if(x){
+      do drawO(xcenter, ycenter);
+    }else{
+      do drawX(xcenter, ycenter);
+    }
     return;
   }
 }
