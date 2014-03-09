@@ -34,6 +34,38 @@ class Board {
     return this;
   }
 
+  method int chooseMove(){
+    var int selection;
+    var int key;
+    let selection = 4;
+
+    while(true){
+      let key = Keyboard.keyPressed();
+      if(key = 132){
+        do eraseReticle(selection);
+        let selection = selection + 1;
+        do drawReticle(selection);
+      }
+      if(key = 130){
+        do eraseReticle(selection);
+        let selection = selection - 1;
+        do drawReticle(selection);
+      }
+      if(key = 128){
+        do eraseReticle(selection);
+        return selection;
+      }
+    }
+    return 4;
+  }
+
+  method boolean move(int location, boolean x){
+    let squares[location] = x;
+    do drawMove(location, x);
+    /*return winner();*/
+    return false;
+  }
+
   method void drawGrid(){
     // left vertical
     do Screen.drawLine(224, 32, 224, 224);
@@ -68,9 +100,37 @@ class Board {
     return;
   }
 
+  method void eraseReticle(int location){
+    let location = sanitizeLocation(location);
+    do Screen.setColor(false);
+    do drawReticle(location);
+    do Screen.setColor(true);
+    return; 
+  }
+  method void drawReticle(int location){
+    var int left, right, top, bottom;
+    var int x, y;
+    let location = sanitizeLocation(location);
+    let x = locationsx[location];
+    let y = locationsy[location];
+
+    let left = x - 22;
+    let right = x + 22;
+    let top = y + 22;
+    let bottom = y - 22;
+    
+    do Screen.drawLine(left, top, left, bottom);
+    do Screen.drawLine(left, top, right, top);
+    do Screen.drawLine(right, top, right, bottom);
+    do Screen.drawLine(right, bottom, left, bottom);
+
+    return; 
+  }
+
   method void drawMove(int location, boolean x){
     var int xcenter;
     var int ycenter;
+    let location = sanitizeLocation(location);
     let xcenter = locationsx[location];
     let ycenter = locationsy[location];
     
@@ -80,5 +140,31 @@ class Board {
       do drawX(xcenter, ycenter);
     }
     return;
+  }
+
+  method void winner(){
+    if((squares[0] = squares[4]) & (squares[4] = squares[8])){
+      do Output.printString("We have a winner! Congratulations ");
+      if(squares[0] = 1){
+        do Output.printChar("X");
+      }else{
+        do Output.printChar("O");
+      }
+      do Sys.halt();
+    }
+    return;
+  }
+  
+  method int sanitizeLocation(int location){
+    if((location > -1) & (location < 9)){
+      return location;
+    }
+    if(location < 0){
+      return 0;
+    }
+    if(location > 8){
+      return 8;
+    }
+    return 4;
   }
 }

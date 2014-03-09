@@ -1,19 +1,16 @@
 class Main {
   function void main(){
     var Board board;
-    var int i;
+    var int location;
     var boolean x;
     
     let board = Board.new();
 
-    let i = 0;
-    
     let x = false;
-    while(i < 10){
-      do board.drawMove(i, x);
-      let i = i + 1;
+    while(true){
+      let location = board.chooseMove();
+      do board.move(location, x);
       let x = ~x;
-      do Sys.wait(2000);
     }
 
     return;

@@ -2,30 +2,23 @@ function Main.main 3
 call Board.new 0
 pop local 0
 push constant 0
-pop local 1
-push constant 0
 pop local 2
 label WHILE_EXP0
-push local 1
-push constant 10
-lt
+push constant 0
+not
 not
 if-goto WHILE_END0
 push local 0
+call Board.chooseMove 1
+pop local 1
+push local 0
 push local 1
 push local 2
-call Board.drawMove 3
+call Board.move 3
 pop temp 0
-push local 1
-push constant 1
-add
-pop local 1
 push local 2
 not
 pop local 2
-push constant 2000
-call Sys.wait 1
-pop temp 0
 goto WHILE_EXP0
 label WHILE_END0
 push constant 0
