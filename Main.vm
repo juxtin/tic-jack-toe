@@ -9,12 +9,8 @@ not
 not
 if-goto WHILE_END0
 push local 0
-call Board.chooseMove 1
-pop local 1
-push local 0
-push local 1
 push local 2
-call Board.move 3
+call Board.chooseMove 2
 pop temp 0
 push local 2
 not

@@ -8,8 +8,7 @@ class Main {
 
     let x = false;
     while(true){
-      let location = board.chooseMove();
-      do board.move(location, x);
+      do board.chooseMove(x);
       let x = ~x;
     }
 

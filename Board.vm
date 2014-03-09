@@ -220,6 +220,11 @@ push pointer 0
 push local 0
 call Board.eraseReticle 2
 pop temp 0
+push pointer 0
+push local 0
+push argument 1
+call Board.move 3
+pop temp 0
 push local 0
 return
 label IF_FALSE2

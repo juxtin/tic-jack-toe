@@ -34,7 +34,7 @@ class Board {
     return this;
   }
 
-  method int chooseMove(){
+  method int chooseMove(boolean x){
     var int selection;
     var int key;
     let selection = 4;
@@ -53,6 +53,7 @@ class Board {
       }
       if(key = 128){
         do eraseReticle(selection);
+        do move(selection, x);
         return selection;
       }
     }
