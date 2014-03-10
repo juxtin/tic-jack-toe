@@ -5,9 +5,11 @@ class Board {
 
   
   constructor Board new(){
+    // Initialize a new game board
     let locationsx = Array.new(9);
     let locationsy = Array.new(9);
 
+    // This has to be repetitive because Jack doesn't have mod or rem (yet)
     let locationsx[0] = 192;
     let locationsx[1] = 256;
     let locationsx[2] = 320;
@@ -35,6 +37,7 @@ class Board {
   }
 
   method int chooseMove(boolean x){
+    // Interactively select a square to place an X (if x = true) or an O (x = false)
     var int selection;
     var int key;
     let selection = 4;
@@ -42,27 +45,27 @@ class Board {
     
     while(true){
       let key = Keyboard.keyPressed();
-      if(key = 132){
+      if(key = 132){ // Right arrow
         do eraseReticle(selection);
         let selection = sanitizeLocation(selection + 1);
         do drawReticle(selection);
       }
-      if(key = 130){
+      if(key = 130){ // Left arrow
         do eraseReticle(selection);
         let selection = sanitizeLocation(selection - 1);
         do drawReticle(selection);
       }
-      if(key = 131){
+      if(key = 131){ // Up arrow
         do eraseReticle(selection);
         let selection = sanitizeLocation(selection - 3);
         do drawReticle(selection);
       }
-      if(key = 133){
+      if(key = 133){ // Down arrow
         do eraseReticle(selection);
         let selection = sanitizeLocation(selection + 3);
         do drawReticle(selection);
       }
-      if(key = 128){
+      if(key = 128){ // Return key
         do eraseReticle(selection);
         if(validSelection(selection)){
           do move(selection, x);
@@ -76,24 +79,16 @@ class Board {
   }
 
   method boolean validSelection(int location){
+    // Check to see if the selection passed is a valid move, i.e., not a square that is already marked.
     if(~(squares[location] = -1) & ~(squares[location] = 1)){
       return true;
     }else{
-      do Output.printString("Invalid selection: ");
-      do Output.printInt(location);
-      do Output.printString(" is already set to ");
-      do Output.printInt(squares[location]);
       return false;
     }
   }
 
   method void move(int location, boolean x){
-    /*do Output.printString("Set location ");*/
-    /*do Output.printInt(location);*/
-    /*do Output.printString(" from ");*/
-    /*do Output.printInt(squares[location]);*/
-    /*do Output.printString(" to ");*/
-
+    // Place an X (if x = true) or an O (x = false) at location.
     if(x){
       let squares[location] = 1;
     }else{
@@ -106,6 +101,7 @@ class Board {
   }
 
   method void drawGrid(){
+    // Draw the gameboard.
     // left vertical
     do Screen.drawLine(224, 32, 224, 224);
     // right vertical
@@ -118,6 +114,7 @@ class Board {
   }
 
   method void drawO(int x, int y){
+    // Draw an O centered at the given x, y coordinates by making a solid black circle, then a slightly smaller white circle inside of it.
     do Screen.drawCircle(x, y, 20);
     do Screen.setColor(false);
     do Screen.drawCircle(x, y, 19);
@@ -126,6 +123,7 @@ class Board {
   }
 
   method void drawX(int x, int y){
+    // Draw an X centered at the given x, y coordinates.
     var int left, right, top, bottom;
 
     let left = x - 15;
@@ -140,6 +138,7 @@ class Board {
   }
 
   method void eraseReticle(int location){
+    // Erase a selection reticle by redrawing it with color set to white.
     let location = sanitizeLocation(location);
     do Screen.setColor(false);
     do drawReticle(location);
@@ -148,6 +147,7 @@ class Board {
   }
 
   method void drawReticle(int location){
+    // Draw a selection reticle over the given location on the board. Intentionally does not set the draw color (white or black) so that it can also be used to erase a reticle if called by eraseReticle.
     var int left, right, top, bottom;
     var int x, y;
     let location = sanitizeLocation(location);
@@ -168,6 +168,7 @@ class Board {
   }
 
   method void drawMove(int location, boolean x){
+    // Given a location, draws an X there if x = true, otherwise draws an O.
     var int xcenter;
     var int ycenter;
     let location = sanitizeLocation(location);
@@ -183,6 +184,7 @@ class Board {
   }
 
   method int sanitizeLocation(int location){
+    // Ensures that locations are not < 0 or > 8.
     if((location > -1) & (location < 9)){
       return location;
     }
@@ -196,6 +198,8 @@ class Board {
   }
 
   method boolean winner(){
+  // Checks the whole board using victoryOn to see if there is a winner.
+  // Ugly? Yes. But Jack doesn't have a mod or rem function
     if((victoryOn(squares[0], squares[1], squares[2])) |
         (victoryOn(squares[3], squares[4], squares[5])) |
         (victoryOn(squares[6], squares[7], squares[8])) |
@@ -210,6 +214,7 @@ class Board {
   }
 
   method string idToString(int id){
+    // The game board is represented as an array of locations, -1 for X, 1 for O. This function translates to strings so that we can print output for the user.
     if(id = -1){
       return "X";
     }else{
@@ -218,6 +223,7 @@ class Board {
   }
 
   method boolean victoryOn(int x, int y, int z){
+    // Should be called with the values of three lined-up locations. Checks to see whether they are all equal to eachother but are not 0 (unplayed). Declares the winner if there is one.
     if((x = 0) | (y = 0) | (z = 0)){
       return false;
     }
